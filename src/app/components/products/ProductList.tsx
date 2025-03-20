@@ -1,4 +1,5 @@
 "use client"
+import { useEffect, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 
 interface Product {
@@ -60,9 +61,15 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const adminNumber = "+2348036026669"; 
-  const image = `${window.location.origin}${product.image}`;
+  const [imageUrl, setImageUrl] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setImageUrl(`${window.location.origin}${product.image}`);
+    }
+  }, [product.image]);
   const handlePurchase = () => {
-    const message = `Hello Sandexlizzy, I want to buy the following product:\n\n🛒 *Product:* ${product.name}\n💰 *Price:* ₦${product.price}\n🖼 *Image:* ${image}\n\nPlease provide me with payment details.`;
+    const message = `Hello Sandexlizzy, I want to buy the following product:\n\n🛒 *Product:* ${product.name}\n💰 *Price:* ₦${product.price}\n🖼 *Image:* ${imageUrl}\n\nPlease provide me with payment details.`;
     
     // Encode message for URL
     const encodedMessage = encodeURIComponent(message);
