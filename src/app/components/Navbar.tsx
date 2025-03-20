@@ -10,15 +10,15 @@ function Navbar() {
     <div className="container mx-auto px-6 py-4 flex justify-between items-center">
       {/* Logo */}
       <a href="/" className="text-2xl font-bold text-gray-800">
-        Sandex<span className="green text-[#16a34a]">lizzy</span>
+        Sandex<span className="green">lizzy</span>
       </a>
 
       {/* Desktop Menu */}
       <div className="hidden md:flex space-x-8">
-        <a href="#" className="text-gray-700 hover:text-[#2563eb]">Home</a>
-        <a href="#" className="text-gray-700 hover:text-[#2563eb]">Shop</a>
-        <a href="#" className="text-gray-700 hover:text-[#2563eb]">About</a>
-        <a href="#" className="text-gray-700 hover:text-[#2563eb]">Contact</a>
+        <a href="#" className="text-gray-700 hover:text-blue-600">Home</a>
+        <a href="#" className="text-gray-700 hover:text-blue-600">Shop</a>
+        <a href="#" className="text-gray-700 hover:text-blue-600">About</a>
+        <a href="#" className="text-gray-700 hover:text-blue-600">Contact</a>
       </div>
 
       {/* Search Bar & Icons */}
@@ -28,8 +28,8 @@ function Navbar() {
           placeholder="Search..."
           className="border border-gray-300 rounded-lg px-3 py-1 focus:outline-none focus:border-blue-500"
         />
-        <FaShoppingCart className="text-gray-700 text-xl cursor-pointer hover:text-[#2563eb]" />
-        <FaUser className="text-gray-700 text-xl cursor-pointer hover:text-[#2563eb]" />
+        <FaShoppingCart className="text-gray-700 text-xl cursor-pointer hover:text-blue-600" />
+        <FaUser className="text-gray-700 text-xl cursor-pointer hover:text-blue-600" />
       </div>
 
       {/* Mobile Menu Button */}
@@ -41,18 +41,18 @@ function Navbar() {
     {/* Mobile Menu */}
     {menuOpen && (
       <div className="md:hidden flex flex-col bg-white shadow-md p-4">
-        <a href="#" className="py-2 text-gray-700 hover:text-[#2563eb]">Home</a>
-        <a href="#" className="py-2 text-gray-700 hover:text-[#2563eb]">Shop</a>
-        <a href="#" className="py-2 text-gray-700 hover:text-[#2563eb]">About</a>
-        <a href="#" className="py-2 text-gray-700 hover:text-[#2563eb]">Contact</a>
+        <a href="#" className="py-2 text-gray-700 hover:text-blue-600">Home</a>
+        <a href="#" className="py-2 text-gray-700 hover:text-blue-600">Shop</a>
+        <a href="#" className="py-2 text-gray-700 hover:text-blue-600">About</a>
+        <a href="#" className="py-2 text-gray-700 hover:text-blue-600">Contact</a>
         <div className="flex items-center space-x-4 mt-4">
           <input
             type="text"
             placeholder="Search..."
             className="border border-gray-300 rounded-lg px-3 py-1 w-full focus:outline-none focus:border-blue-500"
           />
-          <FaShoppingCart className="text-gray-700 text-xl cursor-pointer hover:text-[#2563eb]" />
-          <FaUser className="text-gray-700 text-xl cursor-pointer hover:text-[#2563eb]" />
+          <FaShoppingCart className="text-gray-700 text-xl cursor-pointer hover:text-blue-600" />
+          <FaUser className="text-gray-700 text-xl cursor-pointer hover:text-blue-600" />
         </div>
       </div>
     )}

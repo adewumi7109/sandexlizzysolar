@@ -18,5 +18,29 @@ body {
 }
 
 .green{
- color: red !important;
+ color: #16a34a !important;
+}
+.blue600{
+  color: #2563eb !important;
+}
+.gray600{
+  color: #4b5563 !important;
+}
+.gray800{
+  color: #1f2937 !important;
+}
+.gray400{
+  color: #9ca3af !important;
+}
+.bgblue600{
+  background-color: #2563eb !important;
+}
+.bggray900{
+  background-color: #111827 !important;
+}
+
+.shadow-lg{
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 
+            0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+
 }
