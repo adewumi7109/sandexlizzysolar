@@ -16,3 +16,7 @@ body {
   /* background-color: var(--color-background); */
   color: var(--color-foreground);
 }
+
+.green{
+ color: red !important;
+}

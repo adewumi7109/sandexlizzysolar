@@ -10,7 +10,7 @@ function Navbar() {
     <div className="container mx-auto px-6 py-4 flex justify-between items-center">
       {/* Logo */}
       <a href="/" className="text-2xl font-bold text-gray-800">
-        Sandex<span className="text-green-600">lizzy</span>
+        Sandex<span className="green text-[#16a34a]">lizzy</span>
       </a>
 
       {/* Desktop Menu */}
