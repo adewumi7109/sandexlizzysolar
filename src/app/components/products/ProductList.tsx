@@ -15,14 +15,14 @@ const products: Product[] = [
     id: 1,
     name: "1.5kva Solar Energy System",
     description: "1.5kVA Solar Energy System: Includes 1.5kVA Inverter, 1 Solar Panel, 1 Charge Controller, and a 220Ah Battery",
-    price: "1,000,000.00",
+    price: "800,000.00",
     image: "/product/inverter.jpg",
   },
   {
     id: 2,
     name: "Solar Freezer",
     description: "Solar Freezer: Includes 2 Solar Panels, 1 Battery, and 1 DC Freezer",
-    price: "700,000.00",
+    price: "1,800,000.00",
     image: "/product/solarfreezer.jpg",
   },
   {
@@ -53,8 +53,29 @@ const products: Product[] = [
     price: "100,000.00",
     image: "/product/200watt_solarlight.jpg",
   },
+  {
+    id: 7,
+    name: "1.5kva Solar Energy System",
+    description: "1.5kva Solar Energy System: Includes 1.5kVA Inverter, 1 Solar Panel, 1 Charge Controller, and 2 200Ah Batteries",
+    price: "1,800,000.00",
+    image: "/product/inverterwithbluebattery.jpg",
+  },
+  {
+    id: 8,
+    name: "4.5kva Solar Energy System",
+    description: "4.5kva Solar Energy System: Includes 4.5kVA Inverter, 1 Solar Panel, 1 Charge Controller, and 2 200Ah Batteries",
+    price: "1,800,000.00",
+    image: "/product/inverter2.jpg",
+  },
+  {
+    id: 9,
+    name: "Brush Pump",
+    description: "Brush pump: Includes 1 solar panel and battery ",
+    price: "120,000.00",
+    image: "/product/brushpump.jpg",
+  },
 ];
-
+//inverterwithbluebattery
 interface ProductCardProps {
   product: Product;
 }
@@ -91,10 +112,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <h3 className="text-lg font-semibold gray800">{product.name}</h3>
         <p className="gray600 h-20 text-sm mt-1">{product.description}</p>
         <div className="flex justify-between items-center mt-3">
-          <span className="text-xl font-bold blue600">₦{product.price}</span>
+          <span className="text-xl font-bold primaryColor">₦{product.price}</span>
           <button 
             onClick={handlePurchase}
-            className="flex cursor-pointer items-center bgblue600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+            className="flex cursor-pointer items-center bgprimaryColor text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
           >
             <FaShoppingCart className="mr-2" /> Purchase
           </button>
@@ -109,7 +130,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 const ProductList: React.FC = () => {
   return (
     <section className="container mx-auto px-6 md:px-20 py-10 mt-25">
-      <h1 className="text-2xl md:text-4xl font-extrabold blue600">Available Products</h1>
+      <h1 className="text-2xl md:text-4xl font-extrabold primaryColor">Available Products</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 mt-10">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />

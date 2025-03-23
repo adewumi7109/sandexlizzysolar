@@ -3,6 +3,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primaryColor:#A020F0;
+  --secondaryColor:#FFFDD0;
 }
 
 @theme inline {
@@ -43,4 +45,18 @@ body {
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 
             0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
 
+}
+
+
+.primaryColor{
+  color: var(--primaryColor) !important;
+}
+.secondaryColor{
+  color: var(--secondaryColor) !important;
+}
+.bgprimaryColor{
+  background-color: var(--primaryColor) !important;
+}
+.bgsecondaryColor{
+  background-color: var(--secondaryColor) !important;
 }
