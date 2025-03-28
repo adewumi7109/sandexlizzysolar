@@ -1,6 +1,7 @@
-"use client"
+"use client";
 import { useEffect, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
+import { supabase } from "@/lib/supabaseClient";
 
 interface Product {
   id: number;
@@ -8,111 +9,50 @@ interface Product {
   description: string;
   price: string;
   image: string;
+  image_url: string;
 }
 
-const products: Product[] = [
-  {
-    id: 1,
-    name: "1.5kva Solar Energy System",
-    description: "1.5kVA Solar Energy System: Includes 1.5kVA Inverter, 1 Solar Panel, 1 Charge Controller, and a 220Ah Battery",
-    price: "800,000.00",
-    image: "/product/inverter.jpg",
-  },
-  {
-    id: 2,
-    name: "Solar Freezer",
-    description: "Solar Freezer: Includes 2 Solar Panels, 1 Battery, and 1 DC Freezer",
-    price: "1,800,000.00",
-    image: "/product/solarfreezer.jpg",
-  },
-  {
-    id: 3,
-    name: "Solar Fan",
-    description: "Solar Fan: Includes 1 panel, and 1 DC fan",
-    price: "120,000.00",
-    image: "/product/solarfan.jpg",
-  },
-  {
-    id: 4,
-    name: "4kva Solar Energy System",
-    description: "4.5kva Solar Energy System: Includes 4.5kVA Inverter, 1 Solar Panel, 1 Charge Controller, and 4 200Ah Batteries",
-    price: "2,600,000.00",
-    image: "/product/4kva_inverter.jpg",
-  },
-  {
-    id: 5,
-    name: "100 watt solar light",
-    description: "100 watt solar light: Includes 1 panel, and 1 DC light",
-    price: "30,000.00",
-    image: "/product/100watt_solarlight.jpg",
-  },
-  {
-    id: 6,
-    name: "200 watt solar light",
-    description: "200 watt solar light: Includes 1 panel, and 1 DC light",
-    price: "40,000.00",
-    image: "/product/200watt_solarlight.jpg",
-  },
-  {
-    id: 7,
-    name: "1.5kva Solar Energy System",
-    description: "1.5kva Solar Energy System: Includes 1.5kVA Inverter, 1 Solar Panel, 1 Charge Controller, and 2 200Ah Batteries",
-    price: "1,800,000.00",
-    image: "/product/inverterwithbluebattery.jpg",
-  },
-  {
-    id: 8,
-    name: "2.5kva Solar Energy System",
-    description: "2.5kva Solar Energy System: Includes 4.5kVA Inverter, 1 Solar Panel, 1 Charge Controller, and 2 200Ah Batteries",
-    price: "1,800,000.00",
-    image: "/product/inverter2.jpg",
-  },
-  {
-    id: 9,
-    name: "Brush Pump",
-    description: "Brush pump: Includes 1 solar panel and battery ",
-    price: "120,000.00",
-    image: "/product/brushpump.jpg",
-  },
-];
-//inverterwithbluebattery
-interface ProductCardProps {
-  product: Product;
-}
+const fetchProducts = async () => {
+  const { data, error } = await supabase.from("products").select("*");
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const adminNumber = "+2348036026669"; 
-  const [imageUrl, setImageUrl] = useState("");
+  if (error) {
+    console.error("Error fetching products:", error);
+    return [];
+  }
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setImageUrl(`${window.location.origin}${product.image}`);
-    }
-  }, [product.image]);
+  return data.map((product) => ({
+    ...product,
+    image: supabase.storage.from("product-images").getPublicUrl(product.image).data.publicUrl,
+  }));
+};
+
+const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
+  const adminNumber = "+2348036026669";
+
   const handlePurchase = () => {
-    const message = `Hello Sandexlizzy, I want to buy the following product:\n\n🛒 *Product:* ${product.name}\n💰 *Price:* ₦${product.price}\n🖼 *Image:* ${imageUrl}\n\nPlease provide me with payment details.`;
-    
-    // Encode message for URL
-    const encodedMessage = encodeURIComponent(message);
-
-    // WhatsApp link (ensure admin's number includes country code)
-    const whatsappUrl = `https://wa.me/${adminNumber}?text=${encodedMessage}`;
-
-    // Open WhatsApp
+    const message = `Hello Sandexlizzy, I want to buy the following product:\n\n🛒 *Product:* ${product.name}\n💰 *Price:* ₦${product.price}\n🖼 *Image:* ${product.image_url}\n\nPlease provide me with payment details.`;
+    const whatsappUrl = `https://wa.me/${adminNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, "_blank");
   };
 
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat("en-NG", {
+      style: "currency",
+      currency: "NGN",
+      minimumFractionDigits: 2,
+    }).format(amount);
+  };
+  
+  
+
   return (
     <div className="bg-white shadow-lg rounded-lg overflow-hidden w-full sm:w-full md:w-full lg:w-full transition-transform transform hover:scale-105">
-      {/* Product Image */}
-      <img src={product.image} alt={product.name} className="w-full h-50" />
-
-      {/* Product Details */}
+      <img src={product.image_url} alt={product.name} className="w-full h-50" />
       <div className="p-4">
         <h3 className="text-lg font-semibold gray800">{product.name}</h3>
         <p className="gray600 h-20 text-sm mt-1">{product.description}</p>
         <div className="flex justify-between items-center mt-3">
-          <span className="text-xl font-bold primaryColor">₦{product.price}</span>
+          <span className="text-xl font-bold primaryColor">{formatCurrency(parseFloat(product.price))}</span>
           <button 
             onClick={handlePurchase}
             className="flex cursor-pointer items-center bgprimaryColor text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
@@ -125,16 +65,33 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   );
 };
 
-
-
 const ProductList: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+console.log("Products", products)
+
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      const fetchedProducts = await fetchProducts();
+      setProducts(fetchedProducts);
+      setLoading(false);
+    };
+
+    loadProducts();
+  }, []);
+
+  if (loading) return <p className="text-center text-gray-500">Loading products...</p>;
+
   return (
     <section className="container mx-auto px-6 md:px-20 py-10 mt-25">
       <h1 className="text-2xl md:text-4xl font-extrabold primaryColor">Available Products</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 mt-10">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+        {products.length > 0 ? (
+          products.map((product) => <ProductCard key={product.id} product={product} />)
+        ) : (
+          <p className="text-center text-gray-500">No products available.</p>
+        )}
       </div>
     </section>
   );
